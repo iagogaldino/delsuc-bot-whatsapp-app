@@ -1,0 +1,32 @@
+
+.login-container {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+}
+
+.login-card {
+  width: 400px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+p {
+  margin-top: 30px;
+}
+
+
+
+mat-form-field {
+  width: 100%;
+}

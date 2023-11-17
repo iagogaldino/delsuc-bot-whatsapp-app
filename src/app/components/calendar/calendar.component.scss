@@ -1,0 +1,44 @@
+.calendar-container {
+  max-width: 100%;
+  margin: auto;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: unset;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td:hover {
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
+
+.selected {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.selected-date {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+}

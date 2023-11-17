@@ -1,0 +1,15 @@
+.contianer {
+  background-color: rgb(240, 237, 237);
+  height: 100%;
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.qr {
+  background-color: rgb(198, 193, 193);
+  width: 150px;
+  height: 150px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.66);
+}

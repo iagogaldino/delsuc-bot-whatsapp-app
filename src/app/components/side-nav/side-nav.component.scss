@@ -1,0 +1,19 @@
+.container {
+  height: 100vh;
+}
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.button {
+  background: #3F51B5;
+  padding: 10px;
+  color: white;
+  border-bottom: 1px solid #777777;
+}
+
+.toolbarmenu {
+  font-size: 10px;
+  border-bottom: 1px solid white;
+}

@@ -1,0 +1,36 @@
+<mat-drawer-container class="container">
+  <mat-drawer mode="side" opened>
+    <ng-container [ngTemplateOutlet]="toolbarmenu"></ng-container>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<ng-template #toolbarmenu>
+  <mat-toolbar color="primary" class="toolbarmenu">
+    <div>+55 (74) 98842-0307</div>
+  </mat-toolbar>
+    <div style="display: grid;">
+
+      <div class="button"
+        color="primary"
+        (click)="onClickBtMenu(routesApp.SCHEDULES)">
+        Agendamentos
+      </div>
+
+      <div class="button"
+        color="primary"
+        (click)="onClickBtMenu(routesApp.NEW_SCHEDULE)">
+        Criar nova agend
+      </div>
+
+      <div class="button"
+        color="primary"
+        (click)="onClickExit()">
+        Sair
+      </div>
+
+
+  </div>
+</ng-template>

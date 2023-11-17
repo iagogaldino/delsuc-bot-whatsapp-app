@@ -1,0 +1,27 @@
+<div class="calendar-container">
+  <div class="header">
+    <button mat-button (click)="prevMonth()">Anterior</button>
+    <button mat-button (click)="nextMonth()">Próximo</button>
+    <h2>{{ currentDate.format('MMMM YYYY') }}</h2>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">{{ day }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let week of daysInMonth">
+        <td *ngFor="let day of week" (click)="selectDate(day)"
+            [class.selected]="isSelectedDay(day)">
+          {{ day || ' ' }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="selectedDate" class="selected-date">
+    <p>Selected Date: {{ selectedDate.format('MMMM DD, YYYY') }}</p>
+  </div>
+</div>

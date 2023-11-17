@@ -1,0 +1,102 @@
+<mat-toolbar color="primary">
+  <div>Novo agendamento</div>
+</mat-toolbar>
+
+
+<mat-drawer-container class="container">
+  <mat-drawer mode="side" opened>
+    <ng-container [ngTemplateOutlet]="buttons"></ng-container>
+  </mat-drawer>
+  <mat-drawer-content>
+    <ng-container [ngTemplateOutlet]="items"></ng-container>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
+<ng-template #buttons>
+  @for (user of appService.conctacts; track user.selected) {
+  <button class="user" (click)="onClickUser(user)" [ngClass]="{'user-selected': user.selected}">
+    <div class="user-avatar" style="background-image: url('{{user.profilePicThumbObj.imgFull}}');"></div>
+    <div class="user-name">{{user.name}}</div>
+  </button>
+} @empty {
+  @if (loading) {
+    <div class="p-bar">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+  } @else {
+    @if (!appService.conctacts.length) {
+      <div class="p-bar">Nenhum usuário encontrado</div>
+    }
+  }
+
+}
+</ng-template>
+
+<ng-template #items>
+<div style="
+text-align: center;
+height: 80%;
+  padding: 30px;">
+
+<mat-accordion>
+  <form [formGroup]="form"></form>
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Título da agenda
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <mat-form-field class="example-full-width">
+    <mat-label>Título da agenda</mat-label>
+    <input matInput placeholder="Ex. propaganda festa">
+  </mat-form-field>
+</mat-expansion-panel>
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Imagem
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+</mat-expansion-panel>
+
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Texto
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <mat-form-field class="form-desc">
+    <mat-label>Texto para a mensagem</mat-label>
+    <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+  </mat-form-field>
+</mat-expansion-panel>
+
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Data agenda
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <app-calendar/>
+</mat-expansion-panel>
+
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Horário
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <!-- @defer Só carrega componente quando a tela chegar no elemento  -->
+  @defer (on viewport) {
+    <!-- Renderizando componentes programaticamente -->
+    <ng-container *ngComponentOutlet="getTimeSelector()"></ng-container>
+  } @placeholder { <span>....</span> }
+</mat-expansion-panel>
+
+</mat-accordion>
+  <div class="foot">
+    <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Agendar</button>
+  </div>
+</div>
+</ng-template>

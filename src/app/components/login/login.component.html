@@ -1,0 +1,20 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <h2>Login</h2>
+    <form>
+      <mat-form-field>
+        <mat-label for="telefone">Telefone</mat-label>
+        <input matInput type="text" id="telefone" placeholder="Digite seu telefone" >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label for="senha">Senha</mat-label>
+        <input matInput type="password" id="senha" placeholder="Digite sua senha" >
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="onClickEnter()">Entrar</button>
+    </form>
+
+    <p class="cadastro-link">Ainda não tem uma conta? <a href="javscript:;" (click)="goRegister()">Cadastrar-se</a></p>
+  </mat-card>
+</div>
