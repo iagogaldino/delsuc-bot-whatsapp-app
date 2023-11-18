@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <div>Novo agendamento</div>
+  <div>Nova campanha</div>
 </mat-toolbar>
 
 
@@ -26,7 +26,14 @@
     </div>
   } @else {
     @if (!appService.conctacts.length) {
-      <div class="p-bar">Nenhum usuário encontrado</div>
+      @if (showConnect) {
+      <div class="p-bar" style="height: 100%;">
+        <!-- Whatsapp desconectado -->
+        <app-connect-phone></app-connect-phone>
+      </div>
+      } @else {
+        <div class="p-bar">Nenhum usuário encontrado</div>
+      }
     }
   }
 
@@ -40,16 +47,16 @@ height: 80%;
   padding: 30px;">
 
 <mat-accordion>
-  <form [formGroup]="form"></form>
+  <form [formGroup]="form">
 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Título da agenda
+      Título da campanha
     </mat-panel-title>
   </mat-expansion-panel-header>
   <mat-form-field class="example-full-width">
-    <mat-label>Título da agenda</mat-label>
-    <input matInput placeholder="Ex. propaganda festa">
+    <mat-label>Título da campanha</mat-label>
+    <input matInput placeholder="Ex. propaganda festa" formControlName="title">
   </mat-form-field>
 </mat-expansion-panel>
 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -68,17 +75,17 @@ height: 80%;
   </mat-expansion-panel-header>
   <mat-form-field class="form-desc">
     <mat-label>Texto para a mensagem</mat-label>
-    <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+    <textarea matInput placeholder="Ex. It makes me feel..."  formControlName="text"></textarea>
   </mat-form-field>
 </mat-expansion-panel>
 
 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      Data agenda
+      Data campanha
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <app-calendar/>
+  <app-calendar (onSelectDate)="onSelectDate($event)"/>
 </mat-expansion-panel>
 
 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -90,13 +97,16 @@ height: 80%;
   <!-- @defer Só carrega componente quando a tela chegar no elemento  -->
   @defer (on viewport) {
     <!-- Renderizando componentes programaticamente -->
-    <ng-container *ngComponentOutlet="getTimeSelector()"></ng-container>
+    <div style="text-align: left;">
+      <input type="time" formControlName="time">
+    </div>
+    <!-- <ng-container *ngComponentOutlet="getTimeSelector()"></ng-container> -->
   } @placeholder { <span>....</span> }
 </mat-expansion-panel>
-
+</form>
 </mat-accordion>
   <div class="foot">
-    <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Agendar</button>
+    <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid || showConnect">Salvar</button>
   </div>
 </div>
 </ng-template>

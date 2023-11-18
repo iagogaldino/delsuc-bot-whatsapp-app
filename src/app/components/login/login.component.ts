@@ -1,46 +1,61 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
-import { AppService } from '../../services/app.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { CalendarComponent } from '../calendar/calendar.component';
-import { NewScheduleComponent } from '../new-schedule/new-schedule.component';
-import { SchedulesComponent } from '../schedules/schedules.component';
-import { TimeSelectorComponent } from '../time-selector/time-selector.component';
-import { RoutesApp } from '../../models/enums/routes.enum';
+import { AppService } from "./../../services/app.service";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { RoutesApp } from "../../models/enums/routes.enum";
+import { AppRequestService } from "../../services/app-request.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [ MatToolbarModule, MatIconModule, MatCardModule,
-    MatFormFieldModule, MatInputModule, MatButtonModule, MatExpansionModule, CalendarComponent, TimeSelectorComponent,
-    SchedulesComponent,
-    RouterOutlet],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrl: "./login.component.scss",
 })
 export class LoginComponent implements OnInit {
-  // private service1: AppService = inject(AppService);
-  constructor(private _router: Router) { }
+  form!: FormGroup;
+  loading = false;
+
+  constructor(
+    private _router: Router,
+    private _appRequestService: AppRequestService,
+    private _fb: FormBuilder,
+    private _snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
-    // console.log('logged', this.service1.logged)
+    this.createForm();
   }
 
-  goRegister(): void{
+  goRegister(): void {
     this._router.navigate([RoutesApp.REGISTER]);
   }
 
-  onClickEnter(): void{
-    // this._router.navigate([RoutesApp.DASHBOARD]);
-    const path = `${RoutesApp.DASHBOARD}/${RoutesApp.CONNECT}`;
+  private createForm(): void {
+    this.form = this._fb.group({
+      phone: ["74988420307", Validators.required],
+      pass: ["123", Validators.required],
+    });
+  }
+
+  onClickEnter(): void {
+    const paramsLogin = this.form.value;
+    this.loading = true;
+    this._appRequestService.login(paramsLogin).subscribe({
+      next: (resp) => this.onLoginSuccess(resp),
+      error: (err) => this.showSnackBar(err.error.message),
+      complete: () => this.loading = false
+    });
+  }
+
+  private onLoginSuccess(responseLogin: any): void {
+
+    localStorage.setItem("token", responseLogin.token);
+    const path = `${RoutesApp.DASHBOARD}/${RoutesApp.NEW_SCHEDULE}`;
     this._router.navigate([path]);
   }
 
+  private showSnackBar(message: string): void {
+    this._snackBar.open(message);
+    setTimeout(() => { this._snackBar.dismiss() }, 3500);
+  }
 }

@@ -13,7 +13,7 @@ export const routes: Routes = [
 
   {path: 'dashboard', title: 'Dashboard', component: SideNavComponent, children: [
       {path: RoutesApp.SCHEDULES, title: 'Agendamentos', component: SchedulesComponent},
-      {path: RoutesApp.NEW_SCHEDULE, title: 'Novo agendamento', component: NewScheduleComponent},
+      {path: RoutesApp.NEW_SCHEDULE, title: 'Nova campanha', component: NewScheduleComponent},
       {path: RoutesApp.CONNECT, title: 'Conectar aparelho', component: ConnectPhoneComponent},
     ]
   },

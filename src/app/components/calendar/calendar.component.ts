@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import moment from 'moment';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,6 +20,8 @@ export class CalendarComponent {
   currentDate!: moment.Moment;
   daysInMonth: any;
   selectedDate!: moment.Moment;
+
+  @Output() onSelectDate = new EventEmitter<any>;
 
   constructor() { }
 
@@ -53,6 +55,8 @@ export class CalendarComponent {
 
   selectDate(day: number): void {
     this.selectedDate = moment(this.currentDate).date(day);
+    const selectedDate = this.selectedDate.format('YYYY-MM-DD');
+    this.onSelectDate.emit(selectedDate)
   }
 
   nextMonth(): void {
